@@ -10,6 +10,11 @@
 <nav class="navbar navbar-light bg-light">
   <div class="container-fluid">
     <a class="navbar-brand">Navbar</a>
+
+    <form action="{{route('logout')}}" method="post">
+      @csrf
+      <button type="button btn btn-primary"> logout</button>
+    </form>
     
   </div>
 </nav>

@@ -3,9 +3,13 @@
 @section('content')
 
 <div class="main-container mt-5">
+   
     <div class="card">
     <div class="card-header">All Post
+      
+    @can('create',\App\Models\Post::class)
     <a href="{{route('posts.create')}}" class="btn btn-success">Create</a>
+    @endcan
     <a href="{{route('posts.trashed')}}" class="btn btn-warning">Trashed</a>
 
     </div>
@@ -36,14 +40,18 @@
             <td>{{date('d-m-Y',strtotime($post->created_at))}}</td>
             <td>
                 <div class="d-flex">
-                    <a href="{{route('posts.edit',$post->id)}}" class="btn-sm btn-primary">Edit</a>
+                  @can('update',$post)
+
+                  <a href="{{route('posts.edit',$post->id)}}" class="btn-sm btn-primary">Edit</a>
+                  @endcan
                     <a href="{{route('posts.show',$post->id)}}" class="btn-sm btn-success">Show</a>
-                    
-                    <form action="{{route('posts.destroy',$post->id)}}" method="post">
-                    @csrf
-                    @method('delete')
-                            <button class="btn-sm btn-danger btn">Delete</button>
-                    </form>
+                    @can('delete',$post)
+                        <form action="{{route('posts.destroy',$post->id)}}" method="post">
+                        @csrf
+                        @method('delete')
+                                <button class="btn-sm btn-danger btn">Delete</button>
+                        </form>
+                    @endcan
                 </div>
             </td>
         </tr>

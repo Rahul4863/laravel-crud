@@ -35,12 +35,17 @@
             <td>{{date('d-m-Y',strtotime($post->created_at))}}</td>
             <td>
               <div class="d-flex">
+              @can('restore',$post)
               <a href="{{route('posts.restore',$post->id)}}" class="btn-sm btn-primary">Restore</a>
+              @endcan
+
+              @can('forceDelete',$post)
                 <form action="{{route('posts.force_delete',$post->id)}}" method="post">
                 @csrf
                 @method('DELETE')
                         <button class="btn-sm btn-danger btn">Delete</button>
                 </form>
+              @endcan  
               </div>
             </td>
         </tr>
